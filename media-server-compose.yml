@@ -94,6 +94,36 @@ services:
       interval: 5s
       retries: 10
 
+  proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: proxy
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    restart: always
+    environment:
+      DB_MYSQL_HOST: "proxy-db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_NAME: "npm"
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "EvwE924yc82rvpDfBzpv"
+    volumes:
+      - ${CONFIG_ROOT}/proxy/data:/data
+      - ${CONFIG_ROOT}/proxy/letsencrypt:/etc/letsencrypt
+
+  proxy-db:
+    image: jc21/mariadb-aria:latest
+    container_name: proxy-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: "npm"
+      MYSQL_USER: "npm"
+      MYSQL_PASSWORD: "EvwE924yc82rvpDfBzpv"
+      MYSQL_ROOT_PASSWORD: "EvwE924yc82rvpDfBzpv"
+    volumes:
+      - ${CONFIG_ROOT}/proxy/db:/var/lib/mysql
+
 networks:
   default:
     name: media-server-network
