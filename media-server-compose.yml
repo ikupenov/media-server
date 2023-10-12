@@ -72,57 +72,57 @@ services:
       interval: 5s
       retries: 10
 
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    environment:
-      - PUID=${USER_ID}
-      - PGID=${GROUP_ID}
-      - TZ=${TIMEZONE}
-      - WEBUI_PORT=8080
-    volumes:
-      - ${CONFIG_ROOT}/qbittorrent:/config
-      - ${DOWNLOAD_ROOT}:/downloads
-    ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
-    restart: always
-    healthcheck:
-      test:
-        ["CMD", "curl", "--fail", "http://127.0.0.1:8080/api/v2/app/version"]
-      interval: 5s
-      retries: 10
+  # qbittorrent:
+  #   image: lscr.io/linuxserver/qbittorrent:latest
+  #   container_name: qbittorrent
+  #   environment:
+  #     - PUID=${USER_ID}
+  #     - PGID=${GROUP_ID}
+  #     - TZ=${TIMEZONE}
+  #     - WEBUI_PORT=8080
+  #   volumes:
+  #     - ${CONFIG_ROOT}/qbittorrent:/config
+  #     - ${DOWNLOAD_ROOT}:/downloads
+  #   ports:
+  #     - 8080:8080
+  #     - 6881:6881
+  #     - 6881:6881/udp
+  #   restart: always
+  #   healthcheck:
+  #     test:
+  #       ["CMD", "curl", "--fail", "http://127.0.0.1:8080/api/v2/app/version"]
+  #     interval: 5s
+  #     retries: 10
 
-  proxy:
-    image: jc21/nginx-proxy-manager:latest
-    container_name: proxy
-    ports:
-      - 80:80
-      - 81:81
-      - 443:443
-    restart: always
-    environment:
-      DB_MYSQL_HOST: "proxy-db"
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_NAME: "npm"
-      DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD: "EvwE924yc82rvpDfBzpv"
-    volumes:
-      - ${CONFIG_ROOT}/proxy/data:/data
-      - ${CONFIG_ROOT}/proxy/letsencrypt:/etc/letsencrypt
+  # proxy:
+  #   image: jc21/nginx-proxy-manager:latest
+  #   container_name: proxy
+  #   ports:
+  #     - 80:80
+  #     - 81:81
+  #     - 443:443
+  #   restart: always
+  #   environment:
+  #     DB_MYSQL_HOST: "proxy-db"
+  #     DB_MYSQL_PORT: 3306
+  #     DB_MYSQL_NAME: "npm"
+  #     DB_MYSQL_USER: "npm"
+  #     DB_MYSQL_PASSWORD: "EvwE924yc82rvpDfBzpv"
+  #   volumes:
+  #     - ${CONFIG_ROOT}/proxy/data:/data
+  #     - ${CONFIG_ROOT}/proxy/letsencrypt:/etc/letsencrypt
 
-  proxy-db:
-    image: jc21/mariadb-aria:latest
-    container_name: proxy-db
-    restart: always
-    environment:
-      MYSQL_DATABASE: "npm"
-      MYSQL_USER: "npm"
-      MYSQL_PASSWORD: "EvwE924yc82rvpDfBzpv"
-      MYSQL_ROOT_PASSWORD: "EvwE924yc82rvpDfBzpv"
-    volumes:
-      - ${CONFIG_ROOT}/proxy/db:/var/lib/mysql
+  # proxy-db:
+  #   image: jc21/mariadb-aria:latest
+  #   container_name: proxy-db
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: "npm"
+  #     MYSQL_USER: "npm"
+  #     MYSQL_PASSWORD: "EvwE924yc82rvpDfBzpv"
+  #     MYSQL_ROOT_PASSWORD: "EvwE924yc82rvpDfBzpv"
+  #   volumes:
+  #     - ${CONFIG_ROOT}/proxy/db:/var/lib/mysql
 
 networks:
   default:
