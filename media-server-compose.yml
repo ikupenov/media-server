@@ -13,7 +13,7 @@ services:
       - 9696:9696
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:9696/prowlarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:9696/ping"]
       interval: 5s
       retries: 10
 
@@ -26,13 +26,13 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_ROOT}/sonarr:/config
-      - ${DOWNLOAD_ROOT}:/downloads
-      - "${MEDIA_ROOT}/TV Shows:/tv"
+      - "${MEDIA_ROOT}/TV Shows:/data/media/tv"
+      - "${DOWNLOAD_ROOT}:/data/torrents"
     ports:
       - 8989:8989
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8989/sonarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8989/ping"]
       interval: 5s
       retries: 10
 
@@ -45,13 +45,13 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_ROOT}/radarr:/config
-      - ${DOWNLOAD_ROOT}:/downloads
-      - ${MEDIA_ROOT}/Movies:/movies
+      - ${MEDIA_ROOT}/Movies:/data/media/movies
+      - ${DOWNLOAD_ROOT}:/data/torrents
     ports:
       - 7878:7878
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:7878/radarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:7878/ping"]
       interval: 5s
       retries: 10
 
@@ -68,7 +68,7 @@ services:
       - 5055:5055
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5055/radarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5055/ping"]
       interval: 5s
       retries: 10
 
@@ -82,7 +82,7 @@ services:
   #     - WEBUI_PORT=8080
   #   volumes:
   #     - ${CONFIG_ROOT}/qbittorrent:/config
-  #     - ${DOWNLOAD_ROOT}:/downloads
+  #     - ${DOWNLOAD_ROOT}:/data/torrents
   #   ports:
   #     - 8080:8080
   #     - 6881:6881
