@@ -26,8 +26,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_ROOT}/sonarr:/config
-      - "${MEDIA_ROOT}/TV Shows:/data/media/tv"
-      - "${DOWNLOAD_ROOT}:/data/torrents"
+      - ${DATA_ROOT}:/data
     ports:
       - 8989:8989
     restart: always
@@ -45,8 +44,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_ROOT}/radarr:/config
-      - ${MEDIA_ROOT}/Movies:/data/media/movies
-      - ${DOWNLOAD_ROOT}:/data/torrents
+      - ${DATA_ROOT}:/data
     ports:
       - 7878:7878
     restart: always
