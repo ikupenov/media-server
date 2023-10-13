@@ -80,7 +80,7 @@ services:
   #     - WEBUI_PORT=8080
   #   volumes:
   #     - ${CONFIG_ROOT}/qbittorrent:/config
-  #     - ${DOWNLOAD_ROOT}:/data/torrents
+  #     - ${DATA_ROOT}:/data
   #   ports:
   #     - 8080:8080
   #     - 6881:6881
